@@ -32,14 +32,14 @@ namespace QuotesApi.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            return Ok(_quotesDbContext.Quotes.Find(id));
+            return Ok(_quotesDbContext.Quotes.Find(id));    
         }
 
         [HttpGet("[action]")]
         public IActionResult PageingQuotes(int pagenumber, int itemCount)
         {
             var quotes =_quotesDbContext.Quotes;
-            return Ok(quotes.Skip((pagenumber - 1) * itemCount).Take(itemCount));
+            return itemCount <= 0 || pagenumber <= 0 ? Ok(quotes) : Ok(quotes.Skip((pagenumber - 1) * itemCount).Take(itemCount));
         }
         [HttpPost]
         public IActionResult Post([FromBody]Quote quote)

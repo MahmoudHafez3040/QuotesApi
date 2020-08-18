@@ -34,7 +34,12 @@ namespace QuotesApi.Controllers
         {
             return Ok(_quotesDbContext.Quotes.Find(id));    
         }
-
+        [HttpGet]
+        [Route("[action]")]
+        public IActionResult SearchQuotes(string word)
+        {
+            return Ok(_quotesDbContext.Quotes.Where(x => x.Name.Contains(word)));   
+        }
         [HttpGet("[action]")]
         public IActionResult PageingQuotes(int pagenumber, int itemCount)
         {

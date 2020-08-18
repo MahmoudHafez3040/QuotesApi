@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,7 +15,6 @@ namespace QuotesApi.Controllers
     [Route("[controller]")]
     public class QuotesController : ControllerBase
     {
-
 
         private QuoteDbContext _quotesDbContext;
 
@@ -34,6 +33,13 @@ namespace QuotesApi.Controllers
         public IActionResult Get(int id)
         {
             return Ok(_quotesDbContext.Quotes.Find(id));
+        }
+
+        [HttpGet("[action]")]
+        public IActionResult PageingQuotes(int pagenumber, int itemCount)
+        {
+            var quotes =_quotesDbContext.Quotes;
+            return Ok(quotes.Skip((pagenumber - 1) * itemCount).Take(itemCount));
         }
         [HttpPost]
         public IActionResult Post([FromBody]Quote quote)
